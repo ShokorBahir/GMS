@@ -10,17 +10,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Department extends Resource
 {
-    /**
-     * The model the resource corresponds to.
-     *
-     * @var class-string<\App\Models\Department>
-     */
     public static $model = \App\Models\Department::class;
-
-
     public static $title = 'name';
-
-
     public static $search = [
         'id','name','code',
     ];
@@ -30,8 +21,8 @@ class Department extends Resource
         return [
             ID::make()->sortable(),
             BelongsTo::make(trans("Faculty"),'faculty',Faculty::class)->showCreateRelationButton(),
-            Text::make(trans("Name"),'name'),
-            Text::make(trans("Code"),'code'),
+            Text::make(trans("Name"),'name')->required()->creationRules('required','unique:departments,name')->updateRules('required','unique:departments,name,{{recourceId}}'),
+            Text::make(trans("Code"),'code')->required()->creationRules('required','unique:departments,code')->updateRules('required','unique:departments,code,{{recourceId}}'),
         ];
     }
 
