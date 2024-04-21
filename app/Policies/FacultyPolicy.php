@@ -4,16 +4,21 @@ namespace App\Policies;
 
 use App\Models\Faculty;
 use App\Models\User;
+use App\Support\PermissionCreator;
 use Illuminate\Auth\Access\Response;
+
 
 class FacultyPolicy
 {
+
+    public $resource = "Faculty";
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
         return true;
+        // return $user->hasPermissionTo(PermissionCreator::viewAny($this->resource));
     }
 
     /**

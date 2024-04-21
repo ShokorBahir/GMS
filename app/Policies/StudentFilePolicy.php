@@ -8,6 +8,8 @@ use Illuminate\Auth\Access\Response;
 
 class StudentFilePolicy
 {
+
+    public $resource = "StudentFile";
     /**
      * Determine whether the user can view any models.
      */

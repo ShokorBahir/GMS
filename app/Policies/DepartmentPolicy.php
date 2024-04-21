@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\Response;
 
 class DepartmentPolicy
 {
+    public $resoruce ="Department";
     /**
      * Determine whether the user can view any models.
      */
