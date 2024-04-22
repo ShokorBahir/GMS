@@ -1,4 +1,5 @@
 {
+    "Student Removed From Section Email Message":"Mr/Mrs. :name student of section :section with (:kankor) department of :department have leave the university for one year from :year   ",
   "Actions": "Actions",
   "Details": "Details",
   "If you did not request a password reset, no further action is required.": "If you did not request a password reset, no further action is required.",
@@ -458,6 +459,7 @@
   "Delete all notifications": "Delete all notifications",
   "Are you sure you want to delete all the notifications?" : "Are you sure you want to delete all the notifications?",
   "Mark Read": "Mark Read",
+  "Mark Unread": "Mark Unread",
   "Copy to clipboard": "Copy to clipboard",
   "Are you sure you want to delete this notification?": "Are you sure you want to delete this notification?",
   "The image could not be loaded": "The image could not be loaded",

@@ -2,7 +2,15 @@
 
 namespace App\Providers;
 
+use App\Nova\Dashboards\Main;
+use App\Nova\Department;
+use App\Nova\Faculty;
+use App\Nova\StudentFile;
+use App\Nova\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
@@ -16,6 +24,24 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+        Nova::enableRTL();
+        Nova::mainMenu(function (Request $request) {
+            return [
+                MenuSection::dashboard(Main::class),
+                MenuSection::make(trans("University"),[
+                    MenuItem::resource(new Faculty),
+                    MenuItem::resource(new Department),
+                    MenuItem::resource(new StudentFile),
+                ]),
+
+                MenuSection::make(__('Administration'), [
+                    MenuItem::resource(\App\Nova\User::class),
+                    MenuItem::resource(\Sereny\NovaPermissions\Nova\Role::class),
+                    MenuItem::resource(\Sereny\NovaPermissions\Nova\Permission::class),
+                ])->icon('user')->collapsable()->collapsedByDefault(),
+
+            ];
+        });
     }
 
     /**
@@ -26,9 +52,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function routes()
     {
         Nova::routes()
-                ->withAuthenticationRoutes()
-                ->withPasswordResetRoutes()
-                ->register();
+            ->withAuthenticationRoutes()
+            ->withPasswordResetRoutes()
+            ->register();
     }
 
     /**
@@ -68,10 +94,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             // new \Sereny\NovaPermissions\NovaPermissions(),
+            new \Sereny\NovaPermissions\NovaPermissions(),
 
-            (new \Sereny\NovaPermissions\NovaPermissions())->canSee(function ($request) {
-                return $request->user()->isSuperAdmin();
-            }),
 
         ];
     }

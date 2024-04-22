@@ -15,7 +15,7 @@ class StudentFilePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->hasPermissionTo('viewAnyStudent_file');
     }
 
     /**
@@ -23,7 +23,7 @@ class StudentFilePolicy
      */
     public function view(User $user, StudentFile $studentFile): bool
     {
-        return true;
+        return $user->hasPermissionTo('viewStudent_file');
     }
 
     /**
@@ -31,7 +31,7 @@ class StudentFilePolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->hasPermissionTo('createStudent_file');
     }
 
     /**
@@ -39,7 +39,8 @@ class StudentFilePolicy
      */
     public function update(User $user, StudentFile $studentFile): bool
     {
-        return true;
+        return $user->hasPermissionTo('updateStudent_file');
+
     }
 
     /**
@@ -47,7 +48,8 @@ class StudentFilePolicy
      */
     public function delete(User $user, StudentFile $studentFile): bool
     {
-        return true;
+        return $user->hasPermissionTo('deleteStudent_file');
+
     }
 
     /**
@@ -55,7 +57,8 @@ class StudentFilePolicy
      */
     public function restore(User $user, StudentFile $studentFile): bool
     {
-        return true;
+                return $user->hasPermissionTo('restoreStudent-file');
+
     }
 
     /**
@@ -63,6 +66,7 @@ class StudentFilePolicy
      */
     public function forceDelete(User $user, StudentFile $studentFile): bool
     {
-        return true;
+                return $user->hasPermissionTo('forceDeleteStudent_file');
+
     }
 }
