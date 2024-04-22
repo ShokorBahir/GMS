@@ -8,6 +8,7 @@ use App\Nova\Faculty;
 use App\Nova\StudentFile;
 use App\Nova\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Menu\MenuSection;
@@ -25,6 +26,15 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         parent::boot();
         Nova::enableRTL();
+
+        Nova::footer(function ($request) {
+            $year = now()->year;
+            return Blade::render("
+            <h1 style='text-align: left;'>
+            Developed by SSR @$year </h1>
+            ");
+
+        });
         Nova::mainMenu(function (Request $request) {
             return [
                 MenuSection::dashboard(Main::class),

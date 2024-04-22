@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\StudentFileMetric;
 use Laravel\Nova\Fields\Number;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -23,7 +24,25 @@ class StudentFile extends Resource
         'id',
     ];
 
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return __('Student Files');
+    }
 
+    /**
+     * Get the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return __('Student File');
+    }
     public function fields(NovaRequest $request)
     {
         return [
@@ -45,7 +64,9 @@ class StudentFile extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        return [
+            new StudentFileMetric(),
+        ];
     }
 
     /**

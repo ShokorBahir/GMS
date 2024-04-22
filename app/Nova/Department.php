@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Metrics\DepartmentMetric;
+use App\Nova\Metrics\FacultyMetric;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -15,6 +17,25 @@ class Department extends Resource
     public static $search = [
         'id','name','code',
     ];
+    /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return __('Departments');
+    }
+
+    /**
+     * Get the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return __('Department');
+    }
 
     public function fields(NovaRequest $request)
     {
@@ -34,7 +55,10 @@ class Department extends Resource
      */
     public function cards(NovaRequest $request)
     {
-        return [];
+        return [
+            new DepartmentMetric(),
+
+        ];
     }
 
     /**

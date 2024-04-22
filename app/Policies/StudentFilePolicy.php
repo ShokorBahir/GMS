@@ -57,7 +57,8 @@ class StudentFilePolicy
      */
     public function restore(User $user, StudentFile $studentFile): bool
     {
-                return $user->hasPermissionTo('restoreStudent-file');
+        //return $user->hasPermissionTo('restoreStudent-file');
+        return true;
 
     }
 
@@ -66,7 +67,7 @@ class StudentFilePolicy
      */
     public function forceDelete(User $user, StudentFile $studentFile): bool
     {
-                return $user->hasPermissionTo('forceDeleteStudent_file');
-
+        //return $user->hasPermissionTo('forceDeleteStudent_file');
+        return true;
     }
 }

@@ -36,6 +36,26 @@ class User extends Resource
         'id', 'name', 'email',
     ];
 
+        /**
+     * Get the displayable label of the resource.
+     *
+     * @return string
+     */
+    public static function label()
+    {
+        return __('Uers');
+    }
+
+    /**
+     * Get the displayable singular label of the resource.
+     *
+     * @return string
+     */
+    public static function singularLabel()
+    {
+        return __('User');
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -66,7 +86,7 @@ class User extends Resource
 
                 MorphToMany::make('Roles', 'roles', \Sereny\NovaPermissions\Nova\Role::class),
                 MorphToMany::make('Permissions', 'permissions', \Sereny\NovaPermissions\Nova\Permission::class),
-                
+
 
         ];
     }

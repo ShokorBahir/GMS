@@ -57,7 +57,8 @@ class FacultyPolicy
      */
     public function restore(User $user, Faculty $faculty): bool
     {
-        return $user->hasPermissionTo('restoreFaculty');
+        //return $user->hasPermissionTo("restoreFaculty");
+        return true;
     }
 
     /**
@@ -65,6 +66,7 @@ class FacultyPolicy
      */
     public function forceDelete(User $user, Faculty $faculty): bool
     {
-        return $user->hasPermissionTo('forceDeleteFaculty');
+        //return $user->hasPermissionTo("ForeceDeleteFaculty");
+        return true;
     }
 }
