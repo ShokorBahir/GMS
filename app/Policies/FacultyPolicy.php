@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Faculty;
 use App\Models\User;
+use App\Support\GMS\PermissionEnglishCreator;
 use App\Support\PermissionCreator;
 use Illuminate\Auth\Access\Response;
 
@@ -17,15 +18,17 @@ class FacultyPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo("viewAnyFaculty");
-        // return $user->hasPermissionTo(PermissionCreator::viewAny($this->resource));
+        return $user->hasPermissionTo(PermissionEnglishCreator::viewAny($this->resource));
+        ;
     }
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Faculty $faculty): bool
-    {        return $user->hasPermissionTo("viewFaculty");
+    {
+        return $user->hasPermissionTo(PermissionEnglishCreator::view($this->resource));
+        ;
     }
 
     /**
@@ -33,7 +36,8 @@ class FacultyPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo("createFaculty");
+        return $user->hasPermissionTo(PermissionEnglishCreator::create($this->resource));
+        ;
     }
 
     /**
@@ -41,7 +45,8 @@ class FacultyPolicy
      */
     public function update(User $user, Faculty $faculty): bool
     {
-        return $user->hasPermissionTo("updateFaculty");
+        return $user->hasPermissionTo(PermissionEnglishCreator::update($this->resource));
+        ;
     }
 
     /**
@@ -49,7 +54,8 @@ class FacultyPolicy
      */
     public function delete(User $user, Faculty $faculty): bool
     {
-        return $user->hasPermissionTo("deleteFaculty");
+        return $user->hasPermissionTo(PermissionEnglishCreator::delete($this->resource));
+        ;
     }
 
     /**
@@ -57,8 +63,7 @@ class FacultyPolicy
      */
     public function restore(User $user, Faculty $faculty): bool
     {
-        //return $user->hasPermissionTo("restoreFaculty");
-        return true;
+        return $user->hasPermissionTo(PermissionEnglishCreator::restore($this->resource));
     }
 
     /**
@@ -66,7 +71,6 @@ class FacultyPolicy
      */
     public function forceDelete(User $user, Faculty $faculty): bool
     {
-        //return $user->hasPermissionTo("ForeceDeleteFaculty");
-        return true;
+        return $user->hasPermissionTo(PermissionEnglishCreator::destroy($this->resource));
     }
 }

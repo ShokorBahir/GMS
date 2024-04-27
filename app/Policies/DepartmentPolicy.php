@@ -4,17 +4,18 @@ namespace App\Policies;
 
 use App\Models\Department;
 use App\Models\User;
+use App\Support\GMS\PermissionEnglishCreator;
 use Illuminate\Auth\Access\Response;
 
 class DepartmentPolicy
 {
-    public $resoruce ="Department";
+    public $resource ="Department";
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo("viewAnyDepartment");
+        return $user->hasPermissionTo(PermissionEnglishCreator::viewAny($this->resource));
     }
 
     /**
@@ -22,7 +23,7 @@ class DepartmentPolicy
      */
     public function view(User $user, Department $department): bool
     {
-        return $user->hasPermissionTo("viewDepartment");
+        return $user->hasPermissionTo(PermissionEnglishCreator::view($this->resource));
     }
 
     /**
@@ -30,7 +31,7 @@ class DepartmentPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo("createDepartment");
+        return $user->hasPermissionTo(PermissionEnglishCreator::create($this->resource));
     }
 
     /**
@@ -38,7 +39,7 @@ class DepartmentPolicy
      */
     public function update(User $user, Department $department): bool
     {
-        return $user->hasPermissionTo("updateDepartment");
+        return $user->hasPermissionTo(PermissionEnglishCreator::update($this->resource));
     }
 
     /**
@@ -46,7 +47,7 @@ class DepartmentPolicy
      */
     public function delete(User $user, Department $department): bool
     {
-        return $user->hasPermissionTo("deleteDepartment");
+        return $user->hasPermissionTo(PermissionEnglishCreator::delete($this->resource));
     }
 
     /**
@@ -54,8 +55,7 @@ class DepartmentPolicy
      */
     public function restore(User $user, Department $department): bool
     {
-        //return $user->hasPermissionTo("restoreDepartment");
-        return true;
+        return $user->hasPermissionTo(PermissionEnglishCreator::restore($this->resource));
     }
 
     /**
@@ -63,7 +63,6 @@ class DepartmentPolicy
      */
     public function forceDelete(User $user, Department $department): bool
     {
-        //return $user->hasPermissionTo("forceDeleteDepartment");
-        return true;
+        return $user->hasPermissionTo(PermissionEnglishCreator::destroy($this->resource));
     }
 }

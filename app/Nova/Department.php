@@ -6,6 +6,7 @@ use App\Nova\Metrics\DepartmentMetric;
 use App\Nova\Metrics\FacultyMetric;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -40,10 +41,10 @@ class Department extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
             BelongsTo::make(trans("Faculty"),'faculty',Faculty::class)->showCreateRelationButton(),
             Text::make(trans("Name"),'name')->required()->creationRules('required','unique:departments,name')->updateRules('required','unique:departments,name,{{recourceId}}'),
             Text::make(trans("Code"),'code')->required()->creationRules('required','unique:departments,code')->updateRules('required','unique:departments,code,{{recourceId}}'),
+            HasMany::make(trans('Student Files'),'student_files',StudentFile::class),
         ];
     }
 

@@ -1,5 +1,9 @@
 <?php
+namespace Database\Seeders;
 
+use App\Models\User;
+use App\Support\GMS\PermissionEnglishCreator;
+use App\Support\GMS\PersionPermissionTranslation;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -20,7 +24,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $collection = collect([
             'Faculty',
             'Department',
-            'Student_file',
+            'Student File',
             'User',
             'Role',
             'Permission'
@@ -29,26 +33,31 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $collection->each(function ($item, $key) {
             // create permissions for each collection item
-            Permission::create(['group' => $item, 'name' => 'viewAny' . $item]);
-            Permission::create(['group' => $item, 'name' => 'view' . $item]);
-            Permission::create(['group' => $item, 'name' => 'update' . $item]);
-            Permission::create(['group' => $item, 'name' => 'create' . $item]);
-            Permission::create(['group' => $item, 'name' => 'delete' . $item]);
-            Permission::create(['group' => $item, 'name' => 'destroy' . $item]);
+            Permission::create(['group' => trans($item), 'name' => PermissionEnglishCreator::viewAny($item), 'fa_name' => PersionPermissionTranslation::viewAny(trans($item))]);
+            Permission::create(['group' => trans($item), 'name' => PermissionEnglishCreator::view($item), 'fa_name' => PersionPermissionTranslation::view(trans($item))]);
+            Permission::create(['group' => trans($item), 'name' => PermissionEnglishCreator::create($item), 'fa_name' => PersionPermissionTranslation::create(trans($item))]);
+            Permission::create(['group' => trans($item), 'name' => PermissionEnglishCreator::update($item), 'fa_name' => PersionPermissionTranslation::update(trans($item))]);
+            Permission::create(['group' => trans($item), 'name' => PermissionEnglishCreator::delete($item), 'fa_name' => PersionPermissionTranslation::delete(trans($item))]);
+            Permission::create(['group' => trans($item), 'name' => PermissionEnglishCreator::destroy($item), 'fa_name' => PersionPermissionTranslation::destroy(trans($item))]);
+            Permission::create(['group' => trans($item), 'name' => PermissionEnglishCreator::restore($item), 'fa_name' => PersionPermissionTranslation::restore(trans($item))]);
         });
 
         // Create a Super-Admin Role and assign all Permissions
         $role = Role::create(['name' => 'super-admin']);
+
+        // Give all Permissions to the Super-Admin Role
         $role->givePermissionTo(Permission::all());
 
-        \App\Models\User::factory()->withPersonalTeam()->create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('123')
-        ]);
+        // Create Admin Account
+        $user = User::factory()
+            ->withPersonalTeam()
+            ->create([
+                'name' => 'admin',
+                'email' => 'admin@ku.af',
+                'password' => Hash::make('123')
+            ]);
 
         // Give User Super-Admin Role
-         $user = App\Models\User::whereEmail('admin@gmail.com')->first(); // Change this to your email.
-         $user->assignRole('super-admin');
+        $user->assignRole('super-admin');
     }
 }

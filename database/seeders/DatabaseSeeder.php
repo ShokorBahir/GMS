@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use RolesAndPermissionsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,13 +12,7 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        require_once(database_path('seeders/RolesAndPermissionsSeeder.php'));
+        // Create Initail Authorization Role and Permissions
         $this->call(RolesAndPermissionsSeeder::class);
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

@@ -13,79 +13,42 @@ use Laravel\Nova\Fields\MorphToMany;
 
 class User extends Resource
 {
-    /**
-     * The model the resource corresponds to.
-     *
-     * @var class-string<\App\Models\User>
-     */
     public static $model = \App\Models\User::class;
-
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
     public static $title = 'name';
-
-    /**
-     * The columns that should be searched.
-     *
-     * @var array
-     */
     public static $search = [
-        'id', 'name', 'email',
+        'id',
+        'name',
+        'email',
     ];
 
-        /**
-     * Get the displayable label of the resource.
-     *
-     * @return string
-     */
     public static function label()
     {
-        return __('Uers');
+        return __('Users');
     }
-
-    /**
-     * Get the displayable singular label of the resource.
-     *
-     * @return string
-     */
     public static function singularLabel()
     {
         return __('User');
     }
-
-    /**
-     * Get the fields displayed by the resource.
-     *
-     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
-     * @return array
-     */
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->sortable(),
-
-            Gravatar::make()->maxWidth(50),
-
-            Text::make('Name')
+            Text::make(trans('Name'),'name')
                 ->sortable()
                 ->rules('required', 'max:255'),
 
-            Text::make('Email')
+            Text::make(trans('Email'),'email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Password::make('Password')
+            Password::make(trans('Password'),'password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
                 ->updateRules('nullable', Rules\Password::defaults()),
 
-                MorphToMany::make('Roles', 'roles', \Sereny\NovaPermissions\Nova\Role::class),
-                MorphToMany::make('Permissions', 'permissions', \Sereny\NovaPermissions\Nova\Permission::class),
+            MorphToMany::make(trans('Roles'), 'roles', \Sereny\NovaPermissions\Nova\Role::class),
+            MorphToMany::make(trans('Permissions'), 'permissions', \Sereny\NovaPermissions\Nova\Permission::class),
 
 
         ];

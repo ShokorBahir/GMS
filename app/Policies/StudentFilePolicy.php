@@ -4,18 +4,19 @@ namespace App\Policies;
 
 use App\Models\StudentFile;
 use App\Models\User;
+use App\Support\GMS\PermissionEnglishCreator;
 use Illuminate\Auth\Access\Response;
 
 class StudentFilePolicy
 {
 
-    public $resource = "StudentFile";
+    public $resource = "Student File";
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('viewAnyStudent_file');
+        return $user->hasPermissionTo(PermissionEnglishCreator::viewAny($this->resource));
     }
 
     /**
@@ -23,7 +24,7 @@ class StudentFilePolicy
      */
     public function view(User $user, StudentFile $studentFile): bool
     {
-        return $user->hasPermissionTo('viewStudent_file');
+        return $user->hasPermissionTo(PermissionEnglishCreator::view($this->resource));
     }
 
     /**
@@ -31,7 +32,7 @@ class StudentFilePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('createStudent_file');
+        return $user->hasPermissionTo(PermissionEnglishCreator::create($this->resource));
     }
 
     /**
@@ -39,7 +40,7 @@ class StudentFilePolicy
      */
     public function update(User $user, StudentFile $studentFile): bool
     {
-        return $user->hasPermissionTo('updateStudent_file');
+        return $user->hasPermissionTo(PermissionEnglishCreator::update($this->resource));
 
     }
 
@@ -48,7 +49,7 @@ class StudentFilePolicy
      */
     public function delete(User $user, StudentFile $studentFile): bool
     {
-        return $user->hasPermissionTo('deleteStudent_file');
+        return $user->hasPermissionTo(PermissionEnglishCreator::delete($this->resource));
 
     }
 
@@ -57,17 +58,13 @@ class StudentFilePolicy
      */
     public function restore(User $user, StudentFile $studentFile): bool
     {
-        //return $user->hasPermissionTo('restoreStudent-file');
-        return true;
-
+        return $user->hasPermissionTo(PermissionEnglishCreator::restore($this->resource));
     }
-
-    /**
+    /*
      * Determine whether the user can permanently delete the model.
      */
     public function forceDelete(User $user, StudentFile $studentFile): bool
     {
-        //return $user->hasPermissionTo('forceDeleteStudent_file');
-        return true;
+        return $user->hasPermissionTo(PermissionEnglishCreator::destroy($this->resource));
     }
 }
